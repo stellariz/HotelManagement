@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NavigationBar</title>
+</head>
+<body>
+
+<nav th:fragment="header" class="navbar navbar-expand-md bg-dark navbar-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/}">Hotels Management System</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a class="nav-link" th:href="@{/hotels}">Hotels</a></li>
+
+                <li><a class="nav-link" th:href="@{/booking}">Booking</a></li>
+
+                <li><a class="nav-link" th:href="@{/clients}">Clients</a></li>
+
+                <li><a class="nav-link" th:href="@{/organizations}">Organizations</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<h1>
+</h1>
+</body>
+</html>

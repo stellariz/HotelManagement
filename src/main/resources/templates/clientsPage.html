@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/sticky-footer.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+<br>
+<h3>
+    Client list
+</h3>
+<p>
+    <a th:href="@{/clients/addClient}" class="btn btn-large btn-success">Add new client</a>
+</p>
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Check-in-time</th>
+        <th>Check-out-time</th>
+        <th>Room</th>
+        <th>Reviews</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tempClients:${clientsList}">
+        <td>
+            <a th:href="@{/clients/{id}(id=${tempClients.clientId})}" th:text="${tempClients.name}"></a>
+        </td>
+        <td th:text="${tempClients.checkInTime}"></td>
+        <td th:text="${tempClients.checkOutTime}"></td>
+        <td>
+            <a th:href="@{/rooms/{id}(id=${tempClients.room.roomId})}" th:text="${tempClients.room.roomNumber}"></a>
+        </td>
+        <td>
+            <a th:href="@{/clients/reviews/{id}(id=${tempClients.clientId})}">Check reviews</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div th:replace="fragments/footer :: footer">
+</div>
+</body>
+</html>
