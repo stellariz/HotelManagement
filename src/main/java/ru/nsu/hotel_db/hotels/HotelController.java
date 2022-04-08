@@ -15,6 +15,7 @@ import javax.validation.Valid;
 @RequestMapping("/hotels")
 public class HotelController {
     private final HotelService hotelService;
+    private final HotelServiceService hotelServiceService;
 
     @GetMapping
     public String getHotels(Model model) {
@@ -31,15 +32,15 @@ public class HotelController {
     }
 
     @GetMapping("/services/{id}")
-    public String getServicesInHotel(@PathVariable("id") Long chosenHotelId, Model model){
-        var services = hotelService.getServicesInHotel(chosenHotelId);
+    public String getServicesInHotel(@PathVariable("id") Long chosenHotelId, Model model) {
+        var services = hotelServiceService.getServicesInHotel(chosenHotelId);
         model.addAttribute("hotelServices", services);
         model.addAttribute("chosenHotelId", chosenHotelId);
         return "servicePage";
     }
 
     @GetMapping("/services/addService/{id}")
-    public String getServiceForm(@PathVariable("id") Long chosenHotelId, Model model){
+    public String getServiceForm(@PathVariable("id") Long chosenHotelId, Model model) {
         System.out.println(chosenHotelId);
         model.addAttribute("serviceDTO", new ServiceDTO());
         model.addAttribute("chosenHotelId", chosenHotelId);
@@ -47,11 +48,17 @@ public class HotelController {
     }
 
     @PostMapping("/services/addService/{id}")
-    public String addService(@ModelAttribute("serviceDTO") @Valid ServiceDTO serviceDTO, BindingResult bindingResult, @PathVariable("id") Long chosenHotelId){
-        if (bindingResult.hasErrors()){
+    public String addService(@ModelAttribute("serviceDTO") @Valid ServiceDTO serviceDTO, BindingResult bindingResult, @PathVariable("id") Long chosenHotelId, Model model) {
+        if (bindingResult.hasErrors()) {
             return "serviceForm";
         }
-        hotelService.addNewService(serviceDTO, chosenHotelId);
+        try {
+            hotelServiceService.addNewService(serviceDTO, hotelService.getHotelById(chosenHotelId).get());
+        } catch (IllegalArgumentException e) {
+            log.warn(e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
+            return "serviceForm";
+        }
         return "redirect:/hotels/services/" + chosenHotelId;
     }
 
@@ -62,11 +69,25 @@ public class HotelController {
     }
 
     @PostMapping("/addHotel")
-    public String saveNewHotel(@ModelAttribute("hotel") @Valid HotelDTO hotelDTO, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
+    public String saveNewHotel(@ModelAttribute("hotel") @Valid HotelDTO hotelDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "hotelForm";
         }
-        hotelService.addNewHotel(hotelDTO);
+        try {
+            hotelService.addNewHotel(hotelDTO);
+        } catch (IllegalArgumentException e) {
+            log.warn(e.getMessage());
+            model.addAttribute("errorMessage", e.getMessage());
+            return "hotelForm";
+        }
+        return "redirect:/hotels";
+    }
+
+    @PostMapping
+    public String removeHotel(@RequestParam("id") String hotelId) {
+        hotelServiceService.removeAllServicesFromHotel(Long.valueOf(hotelId));
+        hotelService.removeHotelById(Long.valueOf(hotelId));
+        log.info("deleting hotel with id={}", hotelId);
         return "redirect:/hotels";
     }
 }

@@ -23,6 +23,7 @@
                                         <input type="text" th:field="*{name}" id="Name" class="form-control form-control-lg"/>
                                         <label class="form-label" for="Name">Name</label>
                                         <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
+                                        <p th:if="${errorMessage}" th:style="${'color: red'}" th:text="${errorMessage}"></p>
                                     </div>
                                 </div>
                             </div>

@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Hotel;
-import ru.nsu.hotel_db.Entitiy.HotelsService;
 import ru.nsu.hotel_db.Entitiy.Room;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -15,7 +15,6 @@ import java.util.List;
 public class HotelServiceImpl implements HotelService {
     private final HotelRepository hotelRepository;
     private final RoomRepository roomRepository;
-    private final ServiceRepository serviceRepository;
 
     @Override
     public List<Hotel> getAllHotels() {
@@ -28,20 +27,21 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public Hotel addNewHotel(HotelDTO hotelDTO) {
+    public Hotel addNewHotel(HotelDTO hotelDTO) throws IllegalArgumentException {
         Hotel hotel = new Hotel(null, hotelDTO.getName(), hotelDTO.getHotelClass(), hotelDTO.getLevels());
+        if (hotelRepository.findHotelByName(hotelDTO.getName()).isPresent()){
+            throw new IllegalArgumentException("Hotel with this name already exists!");
+        }
         return hotelRepository.save(hotel);
     }
 
     @Override
-    public List<HotelsService> getServicesInHotel(Long hotelId) {
-        return serviceRepository.findServiceByHotelHotelId(hotelId);
+    public Optional<Hotel> getHotelById(Long hotelId) {
+        return hotelRepository.findById(hotelId);
     }
 
     @Override
-    public HotelsService addNewService(ServiceDTO serviceDTO, Long hotelId) {
-        HotelsService hotelsService = new HotelsService(null, hotelRepository.findById(hotelId).get(), serviceDTO.getName(), serviceDTO.getPrice(), 0);
-        // here to check if service already exists
-        return serviceRepository.save(hotelsService);
+    public void removeHotelById(Long hotelId) {
+        hotelRepository.deleteById(hotelId);
     }
 }
