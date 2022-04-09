@@ -26,8 +26,8 @@ public class ServiceController {
     }
 
     @PostMapping
-    public String removeServiceInHotel(@RequestParam("hotelId") String chosenHotelId, @RequestParam("serviceId") String serviceId) {
-        hotelServiceService.removeServiceFromHotel(Long.valueOf(serviceId));
+    public String removeServiceInHotel(@RequestParam("hotelId") Long chosenHotelId, @RequestParam("serviceId") Long serviceId) {
+        hotelServiceService.removeServiceFromHotel(serviceId);
         log.info("Deleting service {} from hotel {}", serviceId, chosenHotelId);
         return "redirect:/services/" + chosenHotelId;
     }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.Room;
 
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -13,8 +15,13 @@ public class RoomServiceImpl implements RoomService {
     private final RoomRepository roomRepository;
 
     @Override
+    public Optional<Room> findRoomById(Long roomId) {
+        return roomRepository.findById(roomId);
+    }
+
+    @Override
     public Room addNewRoom(RoomDTO roomDTO, Hotel hotel) throws IllegalArgumentException {
-        Room room = new Room(null, roomDTO.getRoomNumber(), hotel, roomDTO.getCapacity(), 0, roomDTO.getFloor(), roomDTO.getServicePrice());
+        Room room = new Room(null, roomDTO.getRoomNumber(), hotel, roomDTO.getCapacity(), 0, roomDTO.getFloor(), (float)2500 * roomDTO.getCapacity() + 1000 * hotel.getHotelClass(), roomDTO.getServicePrice());
         if (roomRepository.findRoomByRoomNumberAndHotelHotelId(room.getRoomNumber(), hotel.getHotelId()).isPresent()) {
             throw new IllegalArgumentException("Room with this number already exists in this hotel!");
         }

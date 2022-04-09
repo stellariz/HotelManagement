@@ -8,7 +8,8 @@ import java.util.Optional;
 
 public interface HotelService {
     List<Hotel> getAllHotels();
-    List<Room> getRoomsInHotel(Long hotelId);
+    List<Room> getAllRoomsInHotel(Long hotelId);
+    List<Room> getFreeRoomsInHotel(Long hotelId);
     Hotel addNewHotel(HotelDTO hotelDTO) throws IllegalArgumentException;
     Optional<Hotel> getHotelById(Long hotelId);
     void removeHotelById(Long hotelId);

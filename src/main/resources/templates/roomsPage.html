@@ -23,6 +23,8 @@
         <th>Floor</th>
         <th>Capacity</th>
         <th>Popularity</th>
+        <th>Price</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -31,6 +33,12 @@
         <td th:text="${tempRooms.floor}"></td>
         <td th:text="${tempRooms.capacity}"></td>
         <td th:text="${tempRooms.popularity}"></td>
+        <td th:text="${tempRooms.price}"></td>
+        <td>
+            <form type="text" th:action="@{/clients/addClient}">
+                <button type="submit" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-danger">Buy room</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

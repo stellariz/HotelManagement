@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.hotel_db.hotels.RoomService;
 
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/clients")
 public class ClientController {
     private final ClientService clientService;
+    private final RoomService roomService;
 
     @GetMapping
     public String getAllClients(Model model) {
@@ -31,8 +33,9 @@ public class ClientController {
     }
 
     @GetMapping("/addClient")
-    public String getRegistrationForm(Model model) {
+    public String getRegistrationForm(@RequestParam("roomId") Long roomId, Model model) {
         model.addAttribute("client", new ClientDTO());
+        model.addAttribute("roomId", roomId);
         return "clientForm";
     }
 
@@ -41,7 +44,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             return "clientForm";
         }
-        clientService.addNewClient(clientDTO);
+        clientService.addNewClient(clientDTO, roomService.findRoomById(clientDTO.getRoomId()).get());
         return "redirect:/clients";
     }
 }

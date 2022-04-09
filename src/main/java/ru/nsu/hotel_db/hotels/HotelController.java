@@ -47,10 +47,10 @@ public class HotelController {
     }
 
     @PostMapping
-    public String removeHotel(@RequestParam("id") String hotelId) {
-        hotelServiceService.removeAllServicesFromHotel(Long.valueOf(hotelId));
-        roomService.removeAllRoomsFromHotel(Long.valueOf(hotelId));
-        hotelService.removeHotelById(Long.valueOf(hotelId));
+    public String removeHotel(@RequestParam("id") Long hotelId) {
+        hotelServiceService.removeAllServicesFromHotel(hotelId);
+        roomService.removeAllRoomsFromHotel(hotelId);
+        hotelService.removeHotelById(hotelId);
         log.info("deleting hotel with id={}", hotelId);
         return "redirect:/hotels";
     }

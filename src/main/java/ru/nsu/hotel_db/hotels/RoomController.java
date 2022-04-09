@@ -19,7 +19,7 @@ public class RoomController {
 
     @GetMapping("/{id}")
     public String getRooms(@PathVariable("id") Long chosenHotelId, Model model) {
-        var rooms = hotelService.getRoomsInHotel(chosenHotelId);
+        var rooms = hotelService.getFreeRoomsInHotel(chosenHotelId);
         model.addAttribute("roomsList", rooms);
         model.addAttribute("chosenHotelId", chosenHotelId);
         return "roomsPage";

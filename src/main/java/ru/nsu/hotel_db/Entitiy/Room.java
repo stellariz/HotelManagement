@@ -21,5 +21,6 @@ public class Room {
     private Integer capacity;
     private Integer popularity;
     private Integer floor;
+    private Float price;
     private Float servicePrice;
 }

@@ -15,10 +15,11 @@ public class ClientDTO {
     private String name;
     @NotNull(message = "Check-in date cannot be empty!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Future(message = "Check in date cannot be in the past!")
+    @FutureOrPresent(message = "Check in date cannot be in the past!")
     private LocalDate checkInTime;
     @NotNull(message = "Check-in date cannot be empty!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Future(message = "Check-out date cannot be in the past!")
     private LocalDate checkOutTime;
+    private Long roomId;
 }
