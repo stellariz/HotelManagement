@@ -18,12 +18,8 @@ public class Client {
     @Column(unique = true)
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orgId")
-    private Organization organization;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId")
     private Room room;
     private LocalDate checkInTime;
     private LocalDate checkOutTime;
-    private Boolean livingStatus;
 }

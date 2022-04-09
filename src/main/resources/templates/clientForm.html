@@ -20,8 +20,9 @@
                             <div class="row">
                                 <div class="mb-4">
                                     <div class="form-outline">
-                                        <input type="text" id="Name" class="form-control form-control-lg"/>
+                                        <input th:field="*{name}" type="text" id="Name" class="form-control form-control-lg"/>
                                         <label class="form-label" for="Name">Name</label>
+                                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
                                     </div>
                                 </div>
                             </div>
@@ -29,34 +30,17 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
                                     <div class="form-outline datepicker w-100">
-                                        <input id="startDate" class="form-control" type="date"/>
+                                        <input th:field="*{checkInTime}" id="startDate" class="form-control" type="date"/>
                                         <label for="startDate">Check-in-time</label>
+                                        <p th:if="${#fields.hasErrors('checkInTime')}" th:errorclass="error" th:errors="*{checkInTime}"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
                                     <div class="form-outline datepicker w-100">
-                                        <input id="endDate" class="form-control" type="date"/>
+                                        <input th:field="*{checkOutTime}" id="endDate" class="form-control" type="date"/>
                                         <label for="endDate">Check-out-time</label>
+                                        <p th:if="${#fields.hasErrors('checkOutTime')}" th:errorclass="error" th:errors="*{checkOutTime}"></p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-4 pb-2">
-
-                                    <div class="form-outline">
-                                        <input type="text" id="organization" class="form-control form-control-lg"/>
-                                        <label class="form-label" for="organization">Organization</label>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-6 mb-4 pb-3">
-
-                                    <div class="form-outline">
-                                        <input type="text" id="roomId" class="form-control form-control-lg"/>
-                                        <label class="form-label" for="roomId">Room id</label>
-                                    </div>
-
                                 </div>
                             </div>
                             <input class="btn btn-success btn-lg" type="submit" value="Submit"/>

@@ -9,4 +9,5 @@ public interface HotelServiceService {
     List<HotelsService> getServicesInHotel(Long hotelId);
     HotelsService addNewService(ServiceDTO serviceDTO, Hotel hotel) throws IllegalArgumentException;
     void removeAllServicesFromHotel(Long hotelId);
+    void removeServiceFromHotel(Long serviceId);
 }

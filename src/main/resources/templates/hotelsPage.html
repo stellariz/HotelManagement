@@ -29,12 +29,12 @@
     <tbody>
     <tr th:each="tempHotels:${hotelsList}">
         <td>
-            <a th:href="@{/hotels/{id}(id=${tempHotels.hotelId})}" th:text="${tempHotels.name}"></a>
+            <a th:href="@{/rooms/{id}(id=${tempHotels.hotelId})}" th:text="${tempHotels.name}"></a>
         </td>
         <td th:text="${tempHotels.hotelClass}"></td>
         <td th:text="${tempHotels.levels}"></td>
         <td>
-            <a th:href="@{/hotels/services/{id}(id=${tempHotels.hotelId})}">View available services</a>
+            <a th:href="@{/services/{id}(id=${tempHotels.hotelId})}">View available services</a>
         </td>
         <td>
             <form type="text" method="POST" th:action="@{/hotels(id=${tempHotels.hotelId})}">

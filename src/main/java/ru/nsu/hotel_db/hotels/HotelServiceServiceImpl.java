@@ -32,4 +32,9 @@ public class HotelServiceServiceImpl implements HotelServiceService {
     public void removeAllServicesFromHotel(Long hotelId) {
         serviceRepository.deleteAll(serviceRepository.findServiceByHotelHotelId(hotelId));
     }
+
+    @Override
+    public void removeServiceFromHotel(Long serviceId) {
+        serviceRepository.deleteHotelsServiceByServiceId(serviceId);
+    }
 }

@@ -16,6 +16,7 @@ import javax.validation.Valid;
 public class HotelController {
     private final HotelService hotelService;
     private final HotelServiceService hotelServiceService;
+    private final RoomService roomService;
 
     @GetMapping
     public String getHotels(Model model) {
@@ -24,52 +25,14 @@ public class HotelController {
         return "hotelsPage";
     }
 
-    @GetMapping("/{id}")
-    public String getRooms(@PathVariable("id") Long chosenHotelId, Model model) {
-        var rooms = hotelService.getRoomsInHotel(chosenHotelId);
-        model.addAttribute("roomsList", rooms);
-        return "roomsPage";
-    }
-
-    @GetMapping("/services/{id}")
-    public String getServicesInHotel(@PathVariable("id") Long chosenHotelId, Model model) {
-        var services = hotelServiceService.getServicesInHotel(chosenHotelId);
-        model.addAttribute("hotelServices", services);
-        model.addAttribute("chosenHotelId", chosenHotelId);
-        return "servicePage";
-    }
-
-    @GetMapping("/services/addService/{id}")
-    public String getServiceForm(@PathVariable("id") Long chosenHotelId, Model model) {
-        System.out.println(chosenHotelId);
-        model.addAttribute("serviceDTO", new ServiceDTO());
-        model.addAttribute("chosenHotelId", chosenHotelId);
-        return "serviceForm";
-    }
-
-    @PostMapping("/services/addService/{id}")
-    public String addService(@ModelAttribute("serviceDTO") @Valid ServiceDTO serviceDTO, BindingResult bindingResult, @PathVariable("id") Long chosenHotelId, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "serviceForm";
-        }
-        try {
-            hotelServiceService.addNewService(serviceDTO, hotelService.getHotelById(chosenHotelId).get());
-        } catch (IllegalArgumentException e) {
-            log.warn(e.getMessage());
-            model.addAttribute("errorMessage", e.getMessage());
-            return "serviceForm";
-        }
-        return "redirect:/hotels/services/" + chosenHotelId;
-    }
-
     @GetMapping("/addHotel")
     public String addHotel(Model model) {
-        model.addAttribute("hotel", new HotelDTO());
+        model.addAttribute("hotelDTO", new HotelDTO());
         return "hotelForm";
     }
 
     @PostMapping("/addHotel")
-    public String saveNewHotel(@ModelAttribute("hotel") @Valid HotelDTO hotelDTO, BindingResult bindingResult, Model model) {
+    public String saveNewHotel(@ModelAttribute("hotelDTO") @Valid HotelDTO hotelDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "hotelForm";
         }
@@ -86,6 +49,7 @@ public class HotelController {
     @PostMapping
     public String removeHotel(@RequestParam("id") String hotelId) {
         hotelServiceService.removeAllServicesFromHotel(Long.valueOf(hotelId));
+        roomService.removeAllRoomsFromHotel(Long.valueOf(hotelId));
         hotelService.removeHotelById(Long.valueOf(hotelId));
         log.info("deleting hotel with id={}", hotelId);
         return "redirect:/hotels";

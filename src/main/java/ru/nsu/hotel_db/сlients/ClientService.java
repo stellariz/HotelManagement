@@ -8,6 +8,5 @@ import java.util.List;
 public interface ClientService {
     List<Client> getAllClients();
     List<Review> getReviewsByClient(Long clientId);
-    Client addNewClient(ClientDTO clientDTO, String organizationName);
-    boolean verifyClientOrganization(String organizationName);
+    Client addNewClient(ClientDTO clientDTO);
 }

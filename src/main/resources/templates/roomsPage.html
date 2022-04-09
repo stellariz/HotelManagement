@@ -9,9 +9,13 @@
 <body>
 <div th:replace="fragments/header :: header">
 </div>
+<br>
 <h3>
     Rooms list
 </h3>
+<p>
+    <a th:href="@{/rooms/addRoom/{id}(id=${chosenHotelId})}" class="btn btn-large btn-success">Add new room</a>
+</p>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>

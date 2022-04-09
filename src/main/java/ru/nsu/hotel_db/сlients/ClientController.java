@@ -4,7 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
@@ -34,10 +37,11 @@ public class ClientController {
     }
 
     @PostMapping("/addClient")
-    public String postNewClient(@ModelAttribute("client") ClientDTO clientDTO) {
-        if (clientService.verifyClientOrganization(clientDTO.getOrganization()) || clientDTO.getOrganization() == null) {
-            clientService.addNewClient(clientDTO, clientDTO.getOrganization());
+    public String postNewClient(@ModelAttribute("client") @Valid ClientDTO clientDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "clientForm";
         }
+        clientService.addNewClient(clientDTO);
         return "redirect:/clients";
     }
 }

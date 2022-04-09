@@ -23,7 +23,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public List<Room> getRoomsInHotel(Long hotelId) {
-        return roomRepository.findFreeRoomsInHotel(hotelId);
+        return roomRepository.findRoomByHotelHotelId(hotelId);
     }
 
     @Override

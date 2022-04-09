@@ -9,23 +9,30 @@
 <body>
 <div th:replace="fragments/header :: header">
 </div>
-<p>
-    <a th:href="@{/hotels/services/addService/{id}(id=${chosenHotelId})}" class="btn btn-large btn-success">Add new service</a>
-</p>
+<br>
 <h3>
     Services list
 </h3>
+<p>
+    <a th:href="@{/services/addService/{id}(id=${chosenHotelId})}" class="btn btn-large btn-success">Add new service</a>
+</p>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th>Name</th>
         <th>Price</th>
+        <th>Delete service</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="tempServices:${hotelServices}">
         <td th:text="${tempServices.name}"></td>
         <td th:text="${tempServices.price}"></td>
+        <td>
+            <form type="text" method="POST" th:action="@{/hotels/services(hotelId=${chosenHotelId}, serviceId=${tempServices.serviceId})}">
+                <button type="submit" name="submit" value="value" class="btn btn-large btn-danger">Delete service</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

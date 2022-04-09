@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Client;
 import ru.nsu.hotel_db.Entitiy.Review;
-import ru.nsu.hotel_db.organizations.OrganizationService;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final ReviewRepository reviewRepository;
-    private final OrganizationService organizationService;
 
     @Override
     public List<Client> getAllClients() {
@@ -28,13 +26,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client addNewClient(ClientDTO clientDTO, String organizationName) {
-        Client client = new Client(null, clientDTO.getName(), organizationService.getOrganizationByName(organizationName).get(), null, clientDTO.getCheckInTime(), clientDTO.getCheckOutTime(), Boolean.TRUE);
+    public Client addNewClient(ClientDTO clientDTO) {
+        Client client = new Client(null, clientDTO.getName(), null, clientDTO.getCheckInTime(), clientDTO.getCheckOutTime());
         return clientRepository.save(client);
-    }
-
-    @Override
-    public boolean verifyClientOrganization(String organizationName) {
-        return organizationService.getOrganizationByName(organizationName).isPresent();
     }
 }

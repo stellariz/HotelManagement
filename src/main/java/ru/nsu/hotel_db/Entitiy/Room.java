@@ -1,5 +1,6 @@
 package ru.nsu.hotel_db.Entitiy;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Room {
     @Id
@@ -16,9 +18,6 @@ public class Room {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "serviceId")
-    private HotelsService hotelsService;
     private Integer capacity;
     private Integer popularity;
     private Integer floor;
