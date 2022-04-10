@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="/sticky-footer.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+</div>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Client registration form</h3>
+                        <form th:action="@{/booking/bookRoom}" th:object="${bookingDTO}" method="post">
+                            <div class="row">
+                                <div class="mb-4">
+                                    <div class="form-outline">
+                                        <input th:field="*{organization}" type="text" id="organization"
+                                               class="form-control form-control-lg"/>
+                                        <label class="form-label" for="organization">Organization</label>
+                                        <p th:if="${#fields.hasErrors('organization')}" th:errorclass="error"
+                                           th:errors="*{organization}"></p>
+                                        <p th:if="${errorMessage}" th:style="${'color: red'}"
+                                           th:text="${errorMessage}"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="text" th:field="*{roomFloor}" id="roomFloor"
+                                               class="form-control form-control-lg"/>
+                                        <label class="form-label" for="roomFloor">Floor</label>
+                                        <p th:if="${#fields.hasErrors('roomFloor')}" th:errorclass="error"
+                                           th:errors="*{roomFloor}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4 pb-3">
+                                    <div class="form-outline">
+                                        <input type="text" th:field="*{roomCapacity}" id="roomCapacity"
+                                               class="form-control form-control-lg"/>
+                                        <label class="form-label" for="roomCapacity">Capacity</label>
+                                        <p th:if="${#fields.hasErrors('roomCapacity')}" th:errorclass="error"
+                                           th:errors="*{roomCapacity}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="text" th:field="*{hotelClass}" id="hotelClass"
+                                               class="form-control form-control-lg"/>
+                                        <label class="form-label" for="hotelClass">Hotel class</label>
+                                        <p th:if="${#fields.hasErrors('hotelClass')}" th:errorclass="error"
+                                           th:errors="*{hotelClass}"></p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                        <div class="form-outline datepicker w-100">
+                                            <input th:field="*{startBooking}" id="startBooking" class="form-control"
+                                                   type="date"/>
+                                            <label for="startBooking">StartBooking</label>
+                                            <p th:if="${#fields.hasErrors('startBooking')}" th:errorclass="error"
+                                               th:errors="*{startBooking}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4 d-flex align-items-center">
+                                        <div class="form-outline datepicker w-100">
+                                            <input th:field="*{endBooking}" id="endBooking" class="form-control"
+                                                   type="date"/>
+                                            <label for="endBooking">Check-out-time</label>
+                                            <p th:if="${#fields.hasErrors('endBooking')}" th:errorclass="error"
+                                               th:errors="*{endBooking}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input class="btn btn-success btn-lg" type="submit" value="Submit"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div th:replace="fragments/footer :: footer">
+</div>
+</body>
+</html>

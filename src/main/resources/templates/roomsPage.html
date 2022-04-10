@@ -14,7 +14,7 @@
     Rooms list
 </h3>
 <p>
-    <a th:href="@{/rooms/addRoom/{id}(id=${chosenHotelId})}" class="btn btn-large btn-success">Add new room</a>
+    <a th:if="${action} == null" th:href="@{/rooms/addRoom/{id}(id=${chosenHotelId})}" class="btn btn-large btn-success">Add new room</a>
 </p>
 <table class="table table-bordered table-striped">
     <thead>
@@ -35,8 +35,9 @@
         <td th:text="${tempRooms.popularity}"></td>
         <td th:text="${tempRooms.price}"></td>
         <td>
-            <form type="text" th:action="@{/clients/addClient}">
-                <button type="submit" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-danger">Buy room</button>
+            <form type="text" th:method="${action} != null ? 'post' : 'get'" th:action="${action} != null ? @{/booking} : @{/clients/addClient}">
+                <button type="submit" th:if="${action} == null" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-danger">Buy room</button>
+                <button type="submit" th:if="${action} != null" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-info">Book Room</button>
             </form>
         </td>
     </tr>

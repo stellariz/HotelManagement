@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 @Data
 public class BookingDTO {
+    @NotBlank(message = "Hotel's name cannot be blank!")
+    private String organization;
     @NotNull(message = "Hotel's class name cannot be empty!")
     @Min(1) @Max(5)
     private Integer hotelClass;

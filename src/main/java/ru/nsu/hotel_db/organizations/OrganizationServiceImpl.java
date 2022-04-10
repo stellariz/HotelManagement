@@ -24,4 +24,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Optional<Organization> getOrganizationByName(String organizationName) {
         return organizationRepository.findOrganizationByName(organizationName);
     }
+
+    @Override
+    public Organization addNewOrganization(OrganizationDTO organizationDTO) {
+        Organization organization = new Organization(null, organizationDTO.getName(), organizationDTO.getSale());
+        return organizationRepository.save(organization);
+    }
 }

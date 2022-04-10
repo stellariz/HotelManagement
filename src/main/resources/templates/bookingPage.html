@@ -13,13 +13,15 @@
 <h3>
     Booking list
 </h3>
+<p>
+    <a th:href="@{booking/bookRoom}" class="btn btn-large btn-success">Book room</a>
+</p>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th>Organization</th>
-        <th>Hotel class</th>
-        <th>Rooms number</th>
-        <th>Total people</th>
+        <th>Hotel Name</th>
+        <th>Room number</th>
         <th>Floor</th>
         <th>Start booking date</th>
         <th>End booking date</th>
@@ -28,10 +30,9 @@
     <tbody>
     <tr th:each="tempBooking:${bookingsList}">
         <td th:text="${tempBooking.organization.name}"></td>
-        <td th:text="${tempBooking.hotelClass}"></td>
-        <td th:text="${tempBooking.roomsNumber}"></td>
-        <td th:text="${tempBooking.totalPeople}"></td>
-        <td th:text="${tempBooking.floor}"></td>
+        <td th:text="${tempBooking.room.hotel.name}"></td>
+        <td th:text="${tempBooking.room.roomNumber}"></td>
+        <td th:text="${tempBooking.room.floor}"></td>
         <td th:text="${tempBooking.startDate}"></td>
         <td th:text="${tempBooking.endDate}"></td>
     </tr>

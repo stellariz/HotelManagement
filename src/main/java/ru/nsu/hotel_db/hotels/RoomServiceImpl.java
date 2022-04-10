@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.Room;
+import ru.nsu.hotel_db.booking.BookingDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -31,5 +33,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void removeAllRoomsFromHotel(Long hotelId) {
         roomRepository.deleteAll(roomRepository.findRoomByHotelHotelId(hotelId));
+    }
+
+    @Override
+    public List<Room> getRoomByBookingConditions(BookingDTO bookingDTO) {
+        return roomRepository.findRoomByCapacityAndFloorAndHotelHotelClass(bookingDTO.getStartBooking(), bookingDTO.getEndBooking(), bookingDTO.getRoomCapacity(), bookingDTO.getRoomFloor(), bookingDTO.getHotelClass());
     }
 }

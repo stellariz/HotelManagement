@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface OrganizationService {
     List<Organization> getAllOrganizations();
     Optional<Organization> getOrganizationByName(String organization);
+    Organization addNewOrganization(OrganizationDTO organizationDTO);
 }
