@@ -33,9 +33,10 @@
         <td th:text="${tempRooms.floor}"></td>
         <td th:text="${tempRooms.capacity}"></td>
         <td th:text="${tempRooms.popularity}"></td>
-        <td th:text="${tempRooms.price}"></td>
+        <td th:if="${sale} == null" th:text="${tempRooms.price}"></td>
+        <td th:if="${sale} != null" th:text="${tempRooms.price} * (1 - ${sale} / 100)"></td>
         <td>
-            <form type="text" th:method="${action} != null ? 'post' : 'get'" th:action="${action} != null ? @{/booking} : @{/clients/addClient}">
+            <form type="text" th:method="post" th:action="${action} != null ? @{/booking} : @{/clients(roomId=${tempRooms.roomId})}">
                 <button type="submit" th:if="${action} == null" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-danger">Buy room</button>
                 <button type="submit" th:if="${action} != null" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-info">Book Room</button>
             </form>

@@ -18,8 +18,8 @@ public class Booking {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orgId")
     private Organization organization;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate bookingStartDate;
+    private LocalDate bookingEndDate;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "roomId")
     private Room room;

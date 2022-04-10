@@ -14,6 +14,7 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/clients")
+@SessionAttributes({"clientDTO"})
 public class ClientController {
     private final ClientService clientService;
     private final RoomService roomService;
@@ -25,6 +26,12 @@ public class ClientController {
         return "clientsPage";
     }
 
+    @PostMapping
+    public String updateClients(@ModelAttribute("clientDTO") ClientDTO clientDTO, @RequestParam("roomId") Long roomId, Model model){
+        clientService.addNewClient(clientDTO, roomService.findRoomById(roomId).get());
+        return "redirect:/clients";
+    }
+
     @GetMapping("/reviews/{id}")
     public String getReviewsForClient(@PathVariable("id") Long id, Model model) {
         var reviews = clientService.getReviewsByClient(id);
@@ -33,18 +40,18 @@ public class ClientController {
     }
 
     @GetMapping("/addClient")
-    public String getRegistrationForm(@RequestParam("roomId") Long roomId, Model model) {
-        model.addAttribute("client", new ClientDTO());
-        model.addAttribute("roomId", roomId);
+    public String getRegistrationForm(Model model) {
+        model.addAttribute("clientDTO", new ClientDTO());
         return "clientForm";
     }
 
     @PostMapping("/addClient")
-    public String postNewClient(@ModelAttribute("client") @Valid ClientDTO clientDTO, BindingResult bindingResult) {
+    public String postNewClient(@ModelAttribute("clientDTO") @Valid ClientDTO clientDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "clientForm";
         }
-        clientService.addNewClient(clientDTO, roomService.findRoomById(clientDTO.getRoomId()).get());
-        return "redirect:/clients";
+        var rooms = roomService.getFreeRoomsOnDate(clientDTO.getCheckInTime(), clientDTO.getCheckOutTime());
+        model.addAttribute("roomsList", rooms);
+        return "roomsPage";
     }
 }

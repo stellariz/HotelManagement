@@ -33,8 +33,8 @@
         <td th:text="${tempBooking.room.hotel.name}"></td>
         <td th:text="${tempBooking.room.roomNumber}"></td>
         <td th:text="${tempBooking.room.floor}"></td>
-        <td th:text="${tempBooking.startDate}"></td>
-        <td th:text="${tempBooking.endDate}"></td>
+        <td th:text="${tempBooking.getBookingStartDate}"></td>
+        <td th:text="${tempBooking.getBookingEndingDate}"></td>
     </tr>
     </tbody>
 </table>

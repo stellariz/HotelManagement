@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.Room;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +25,6 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Room> getAllRoomsInHotel(Long hotelId) {
         return roomRepository.findRoomByHotelHotelId(hotelId);
-    }
-
-    @Override
-    public List<Room> getFreeRoomsInHotel(Long hotelId) {
-        return roomRepository.findFreeRoomsInHotel(hotelId);
     }
 
     @Override
