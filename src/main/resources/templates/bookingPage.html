@@ -25,6 +25,7 @@
         <th>Floor</th>
         <th>Start booking date</th>
         <th>End booking date</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -34,7 +35,13 @@
         <td th:text="${tempBooking.room.roomNumber}"></td>
         <td th:text="${tempBooking.room.floor}"></td>
         <td th:text="${tempBooking.getBookingStartDate}"></td>
-        <td th:text="${tempBooking.getBookingEndingDate}"></td>
+        <td th:text="${tempBooking.getBookingEndDate}"></td>
+        <td>
+            <form type="text" method="POST" th:action="@{/booking/deleteBooking(id=${tempBooking.getBookingId})}">
+                <button type="submit" name="submit" value="value" class="btn btn-large btn-danger">Delete booking
+                </button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.hotel_db.Entitiy.Booking;
 import ru.nsu.hotel_db.hotels.RoomService;
 import ru.nsu.hotel_db.organizations.OrganizationService;
 
@@ -55,5 +54,13 @@ public class BookingController {
         model.addAttribute("action", "Book");
         model.addAttribute("sale", organizationService.getOrganizationByName(bookingDTO.getOrganization()).get().getSale());
         return "roomsPage";
+    }
+
+
+    @PostMapping("/deleteBooking")
+    public String removeBooking(@RequestParam("id") Long bookingId) {
+        bookingService.removeBooking(bookingId);
+        log.info("deleting booking with id={}", bookingId);
+        return "redirect:/booking";
     }
 }

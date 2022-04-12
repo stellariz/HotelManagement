@@ -24,7 +24,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room addNewRoom(RoomDTO roomDTO, Hotel hotel) throws IllegalArgumentException {
-        Room room = new Room(null, roomDTO.getRoomNumber(), hotel, roomDTO.getCapacity(), 0, roomDTO.getFloor(), (float)2500 * roomDTO.getCapacity() + 1000 * hotel.getHotelClass(), roomDTO.getServicePrice());
+        Room room = new Room(null, roomDTO.getRoomNumber(), hotel, roomDTO.getCapacity(), 0, roomDTO.getFloor(), null, roomDTO.getServicePrice());
         if (roomRepository.findRoomByRoomNumberAndHotelHotelId(room.getRoomNumber(), hotel.getHotelId()).isPresent()) {
             throw new IllegalArgumentException("Room with this number already exists in this hotel!");
         }

@@ -10,4 +10,5 @@ public interface BookingService {
     boolean verifyOrganization(String orgName);
     Booking addNewBooking(BookingDTO bookingDTO, Room room);
     Booking getBookingById(Long bookId);
+    void removeBooking(Long bookingId);
 }

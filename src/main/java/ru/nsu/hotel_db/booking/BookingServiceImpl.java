@@ -36,4 +36,13 @@ public class BookingServiceImpl implements BookingService{
     public Booking getBookingById(Long bookId) {
         return bookingRepository.findById(bookId).get();
     }
+
+    @Override
+    public void removeBooking(Long bookingId) {
+        try {
+            bookingRepository.deleteById(bookingId);
+        } catch (Exception e){
+            log.info("Catched exception by trigger. Can't remove booking later than 7 days before start date.");
+        }
+    }
 }

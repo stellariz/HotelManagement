@@ -22,7 +22,6 @@
         <th>Name</th>
         <th>Check-in-time</th>
         <th>Check-out-time</th>
-<!--        <th>Room</th>-->
         <th>Reviews</th>
     </tr>
     </thead>
@@ -33,9 +32,6 @@
         </td>
         <td th:text="${tempClients.checkInTime}"></td>
         <td th:text="${tempClients.checkOutTime}"></td>
-<!--        <td>-->
-<!--            <a th:href="@{/rooms/{id}(id=${tempClients.room.roomId})}" th:text="${tempClients.room.roomNumber}"></a>-->
-<!--        </td>-->
         <td>
             <a th:href="@{/clients/reviews/{id}(id=${tempClients.clientId})}">Check reviews</a>
         </td>
