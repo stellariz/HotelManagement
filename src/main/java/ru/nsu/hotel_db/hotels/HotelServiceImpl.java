@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.Room;
+import ru.nsu.hotel_db.hotels.rooms.RoomRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

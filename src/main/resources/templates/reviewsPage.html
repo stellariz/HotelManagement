@@ -13,9 +13,13 @@
 <h3>
     Review list
 </h3>
+<p>
+    <a th:href="@{/reviews/addReview}" class="btn btn-large btn-success">Add new review</a>
+</p>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
+        <th>Name</th>
         <th>Review</th>
         <th>Rating</th>
         <th>Date</th>
@@ -23,6 +27,9 @@
     </thead>
     <tbody>
     <tr th:each="tempReviews:${reviewsList}">
+        <td>
+            <a th:href="@{/reviews/{clientName}(clientName=${tempReviews.client.name})}" th:text="${tempReviews.client.name}"></a>
+        </td>
         <td th:text="${tempReviews.review}"></td>
         <td th:text="${tempReviews.rating}"></td>
         <td th:text="${tempReviews.reviewDate}"></td>

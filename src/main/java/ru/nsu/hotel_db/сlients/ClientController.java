@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.nsu.hotel_db.hotels.RoomService;
+import ru.nsu.hotel_db.hotels.rooms.RoomService;
 
 import javax.validation.Valid;
 
@@ -30,13 +30,6 @@ public class ClientController {
     public String updateClients(@ModelAttribute("clientDTO") ClientDTO clientDTO, @RequestParam("roomId") Long roomId, Model model){
         clientService.addNewClient(clientDTO, roomService.findRoomById(roomId).get());
         return "redirect:/clients";
-    }
-
-    @GetMapping("/reviews/{id}")
-    public String getReviewsForClient(@PathVariable("id") Long id, Model model) {
-        var reviews = clientService.getReviewsByClient(id);
-        model.addAttribute("reviewsList", reviews);
-        return "reviewsPage";
     }
 
     @GetMapping("/addClient")

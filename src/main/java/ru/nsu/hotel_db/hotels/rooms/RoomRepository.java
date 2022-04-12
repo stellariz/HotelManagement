@@ -1,4 +1,4 @@
-package ru.nsu.hotel_db.hotels;
+package ru.nsu.hotel_db.hotels.rooms;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

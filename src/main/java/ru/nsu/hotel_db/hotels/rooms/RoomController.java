@@ -1,4 +1,4 @@
-package ru.nsu.hotel_db.hotels;
+package ru.nsu.hotel_db.hotels.rooms;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.hotel_db.hotels.HotelService;
 
 import javax.validation.Valid;
 

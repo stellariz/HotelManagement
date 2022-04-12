@@ -1,4 +1,4 @@
-package ru.nsu.hotel_db.hotels;
+package ru.nsu.hotel_db.hotels.rooms;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
