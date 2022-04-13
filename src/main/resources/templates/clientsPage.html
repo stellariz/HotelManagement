@@ -22,19 +22,15 @@
         <th>Name</th>
         <th>Check-in-time</th>
         <th>Check-out-time</th>
-        <th>Reviews</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="tempClients:${clientsList}">
         <td>
-            <a th:href="@{/clients/{id}(id=${tempClients.clientId})}" th:text="${tempClients.name}"></a>
+            <a th:href="@{/reviews/{id}(id=${tempClients.name})}" th:text="${tempClients.name}"></a>
         </td>
         <td th:text="${tempClients.checkInTime}"></td>
         <td th:text="${tempClients.checkOutTime}"></td>
-        <td>
-            <a th:href="@{/clients/reviews/{id}(id=${tempClients.clientId})}">Check reviews</a>
-        </td>
     </tr>
     </tbody>
 </table>

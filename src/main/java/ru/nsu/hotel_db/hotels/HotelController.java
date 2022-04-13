@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.hotel_db.hotels.rooms.RoomService;
+import ru.nsu.hotel_db.hotels.hotelServices.HotelServiceService;
 
 import javax.validation.Valid;
 

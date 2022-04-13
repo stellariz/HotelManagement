@@ -1,4 +1,4 @@
-package ru.nsu.hotel_db.hotels;
+package ru.nsu.hotel_db.hotels.hotelServices;
 
 import lombok.Data;
 

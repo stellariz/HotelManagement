@@ -1,12 +1,14 @@
-package ru.nsu.hotel_db.hotels;
+package ru.nsu.hotel_db.hotels.hotelServices;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.HotelsService;
+import ru.nsu.hotel_db.hotels.ServiceRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,6 +28,11 @@ public class HotelServiceServiceImpl implements HotelServiceService {
             throw new IllegalArgumentException("Service with this name already exists");
         }
         return serviceRepository.save(hotelsService);
+    }
+
+    @Override
+    public Optional<HotelsService> getHotelsServiceById(Long serviceId) {
+        return serviceRepository.findById(serviceId);
     }
 
     @Override

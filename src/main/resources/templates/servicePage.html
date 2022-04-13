@@ -21,6 +21,7 @@
     <tr>
         <th>Name</th>
         <th>Price</th>
+        <th>Buy service</th>
         <th>Delete service</th>
     </tr>
     </thead>
@@ -28,6 +29,11 @@
     <tr th:each="tempServices:${hotelServices}">
         <td th:text="${tempServices.name}"></td>
         <td th:text="${tempServices.price}"></td>
+        <td>
+            <form type="text" method="POST" th:action="@{/bill/buy/{serviceId}(serviceId=${tempServices.serviceId})}">
+                <button type="submit" name="submit" value="value" class="btn btn-large btn-info">Buy service</button>
+            </form>
+        </td>
         <td>
             <form type="text" method="POST" th:action="@{/services(hotelId=${chosenHotelId}, serviceId=${tempServices.serviceId})}">
                 <button type="submit" name="submit" value="value" class="btn btn-large btn-danger">Delete service</button>

@@ -11,28 +11,25 @@
 </div>
 <br>
 <h3>
-    Review list
+    Bills list
 </h3>
-<p>
-    <a th:href="@{/reviews/addReview}" class="btn btn-large btn-success">Add new review</a>
-</p>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th>Name</th>
-        <th>Review</th>
-        <th>Rating</th>
+        <th>Service</th>
+        <th>Price</th>
         <th>Date</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="tempReviews:${reviewsList}">
+    <tr th:each="tempBill:${billsList}">
         <td>
-            <a th:text="${tempReviews.client.name}"></a>
+            <a th:href="@{/bill/info/{clientName}(clientName=${tempBill.client.name})}" th:text="${tempBill.client.name}"></a>
         </td>
-        <td th:text="${tempReviews.review}"></td>
-        <td th:text="${tempReviews.rating}"></td>
-        <td th:text="${tempReviews.reviewDate}"></td>
+        <td th:text="${tempBill.hotelsService.name}"></td>
+        <td th:text="${tempBill.hotelsService.price}"></td>
+        <td th:text="${tempBill.billDate}"></td>
     </tr>
     </tbody>
 </table>
