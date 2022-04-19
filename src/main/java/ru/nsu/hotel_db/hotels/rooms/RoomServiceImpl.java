@@ -32,11 +32,6 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void removeAllRoomsFromHotel(Long hotelId) {
-        roomRepository.deleteAll(roomRepository.findRoomByHotelHotelId(hotelId));
-    }
-
-    @Override
     public List<Room> getRoomByBookingConditions(BookingDTO bookingDTO) {
         return roomRepository.findRoomByCapacityAndFloorAndHotelHotelClass(bookingDTO.getStartBooking(), bookingDTO.getEndBooking(), bookingDTO.getRoomCapacity(), bookingDTO.getRoomFloor(), bookingDTO.getHotelClass());
     }

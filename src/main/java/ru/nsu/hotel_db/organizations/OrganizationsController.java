@@ -5,13 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import ru.nsu.hotel_db.booking.BookingDTO;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,9 +20,11 @@ public class OrganizationsController {
     private final OrganizationService organizationService;
 
     @GetMapping
-    public String getAllOrganizations(Model model) {
-        var organizations = organizationService.getAllOrganizations();
-        model.addAttribute("organizationsList", organizations);
+    public String getOrganizations(@RequestParam Optional<String> filter, Model model) {
+        if (filter.isEmpty()) {
+            var organizations = organizationService.getAllOrganizations();
+            model.addAttribute("organizationsList", organizations);
+        }
         return "organizationsPage";
     }
 
@@ -44,5 +45,21 @@ public class OrganizationsController {
         }
         organizationService.addNewOrganization(organizationDTO);
         return "redirect:/organizations";
+    }
+
+    @GetMapping("/getOrganizationsBookingByDate")
+    public String getDateForm(Model model){
+        model.addAttribute("dateDTOFilter", new DateDTOFilter());
+        return "dateForm";
+    }
+
+    @PostMapping("/getOrganizationsBookingByDate")
+    public String applyDateFilter(@ModelAttribute("dateDTOFilter") @Valid DateDTOFilter dateDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            return "dateForm";
+        }
+        var organizations = organizationService.getOrganizationsByBookingDate(dateDTOFilter);
+        redirectAttributes.addFlashAttribute("organizationsList", organizations);
+        return "redirect:/organizations?filter=date";
     }
 }

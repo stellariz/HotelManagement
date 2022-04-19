@@ -27,7 +27,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public String updateClients(@ModelAttribute("clientDTO") ClientDTO clientDTO, @RequestParam("roomId") Long roomId, Model model){
+    public String updateClients(@ModelAttribute("clientDTO") ClientDTO clientDTO, @RequestParam("roomId") Long roomId, Model model) {
         clientService.addNewClient(clientDTO, roomService.findRoomById(roomId).get());
         return "redirect:/clients";
     }
@@ -45,6 +45,12 @@ public class ClientController {
         }
         var rooms = roomService.getFreeRoomsOnDate(clientDTO.getCheckInTime(), clientDTO.getCheckOutTime());
         model.addAttribute("roomsList", rooms);
+        model.addAttribute("freeRooms", rooms.size());
         return "roomsPage";
+    }
+
+    @GetMapping("/story")
+    public String getStoryForm(Model model) {
+        return "clientForm";
     }
 }

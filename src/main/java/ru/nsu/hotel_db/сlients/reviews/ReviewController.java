@@ -49,4 +49,10 @@ public class ReviewController {
         model.addAttribute("reviewsList", reviewService.getClientReviews(clientName));
         return "reviewsPage";
     }
+
+    @GetMapping("/angryReviews")
+    public String getAngryReviewsPage(Model model){
+        model.addAttribute("reviewsList", reviewService.getAngryReviews());
+        return "reviewsPage";
+    }
 }

@@ -29,4 +29,9 @@ public class ReviewServiceImpl implements ReviewService{
     public List<Review> getClientReviews(String name) {
         return reviewRepository.getReviewByClientName(name);
     }
+
+    @Override
+    public List<Review> getAngryReviews() {
+        return reviewRepository.getAngryReviews();
+    }
 }

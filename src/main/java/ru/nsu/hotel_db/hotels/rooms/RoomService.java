@@ -10,8 +10,10 @@ import java.util.Optional;
 
 public interface RoomService {
     Optional<Room> findRoomById(Long roomId);
+
     Room addNewRoom(RoomDTO roomDTO, Hotel hotel) throws IllegalArgumentException;
-    void removeAllRoomsFromHotel(Long hotelId);
+
     List<Room> getFreeRoomsOnDate(LocalDate startDate, LocalDate endDate);
+
     List<Room> getRoomByBookingConditions(BookingDTO bookingDTO) throws IllegalArgumentException;
 }

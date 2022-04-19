@@ -23,7 +23,6 @@
         <th>Hotel class</th>
         <th>Levels</th>
         <th>Services</th>
-        <th>Remove hotel</th>
     </tr>
     </thead>
     <tbody>
@@ -35,11 +34,6 @@
         <td th:text="${tempHotels.levels}"></td>
         <td>
             <a th:href="@{/services/{id}(id=${tempHotels.hotelId})}">View available services</a>
-        </td>
-        <td>
-            <form type="text" method="POST" th:action="@{/hotels(id=${tempHotels.hotelId})}">
-                <button type="submit" name="submit" value="value" class="btn btn-large btn-danger">Delete hotel</button>
-            </form>
         </td>
     </tr>
     </tbody>

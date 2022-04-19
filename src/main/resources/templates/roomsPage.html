@@ -14,7 +14,10 @@
     Rooms list
 </h3>
 <p>
-    <a th:if="${action} == null" th:href="@{/rooms/addRoom/{id}(id=${chosenHotelId})}" class="btn btn-large btn-success">Add new room</a>
+    <a th:if="${action} == null" th:href="@{/rooms/addRoom/{id}(id=${chosenHotelId})}"
+       class="btn btn-large btn-success">Add new room</a>
+</p>
+<p th:if="${freeRooms} != null" th:text="'Total free rooms is ' + ${freeRooms}">
 </p>
 <table class="table table-bordered table-striped">
     <thead>
@@ -36,9 +39,14 @@
         <td th:if="${sale} == null" th:text="${tempRooms.price}"></td>
         <td th:if="${sale} != null" th:text="${tempRooms.price} * (1 - ${sale} / 100)"></td>
         <td>
-            <form type="text" th:method="post" th:action="${action} != null ? @{/booking} : @{/clients(roomId=${tempRooms.roomId})}">
-                <button type="submit" th:if="${action} == null" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-danger">Buy room</button>
-                <button type="submit" th:if="${action} != null" th:name="roomId" th:value="${tempRooms.roomId}" class="btn btn-large btn-info">Book Room</button>
+            <form type="text" th:method="post"
+                  th:action="${action} != null ? @{/booking} : @{/clients(roomId=${tempRooms.roomId})}">
+                <button type="submit" th:if="${action} == null" th:name="roomId" th:value="${tempRooms.roomId}"
+                        class="btn btn-large btn-danger">Buy room
+                </button>
+                <button type="submit" th:if="${action} != null" th:name="roomId" th:value="${tempRooms.roomId}"
+                        class="btn btn-large btn-info">Book Room
+                </button>
             </form>
         </td>
     </tr>

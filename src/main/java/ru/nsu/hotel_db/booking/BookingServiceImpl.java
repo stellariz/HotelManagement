@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Booking;
 import ru.nsu.hotel_db.Entitiy.Room;
+import ru.nsu.hotel_db.booking.filters.DateAndOrganizationFilterDTO;
 import ru.nsu.hotel_db.organizations.OrganizationRepository;
 
 import java.util.List;
@@ -19,6 +20,12 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
+    }
+
+    @Override
+    public List<Booking> getBookingInPeriod(DateAndOrganizationFilterDTO dateAndOrganizationFilterDTO) {
+       // return bookingRepository.findBookingInPeriod(dateAndOrganizationFilterDTO.getFirstDate(), dateAndOrganizationFilterDTO.getSecondDate(), dateAndOrganizationFilterDTO.getName());
+        return bookingRepository.findBookingByOrganizationNameAndBookingStartDateGreaterThanEqualAndBookingEndDateLessThanEqual(dateAndOrganizationFilterDTO.getName(), dateAndOrganizationFilterDTO.getFirstDate(), dateAndOrganizationFilterDTO.getSecondDate());
     }
 
     @Override

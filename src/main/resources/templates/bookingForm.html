@@ -64,7 +64,7 @@
                                         <div class="form-outline datepicker w-100">
                                             <input th:field="*{startBooking}" id="startBooking" class="form-control"
                                                    type="date"/>
-                                            <label for="startBooking">StartBooking</label>
+                                            <label for="startBooking">Start booking date</label>
                                             <p th:if="${#fields.hasErrors('startBooking')}" th:errorclass="error"
                                                th:errors="*{startBooking}"></p>
                                         </div>
@@ -73,7 +73,7 @@
                                         <div class="form-outline datepicker w-100">
                                             <input th:field="*{endBooking}" id="endBooking" class="form-control"
                                                    type="date"/>
-                                            <label for="endBooking">Check-out-time</label>
+                                            <label for="endBooking">End booking date</label>
                                             <p th:if="${#fields.hasErrors('endBooking')}" th:errorclass="error"
                                                th:errors="*{endBooking}"></p>
                                         </div>

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Organization;
+import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
 import ru.nsu.hotel_db.organizations.userExceptions.OrganizationNotFoundException;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public List<Organization> getAllOrganizations() {
         return organizationRepository.findAll();
+    }
+
+    @Override
+    public List<Organization> getOrganizationsByBookingDate(DateDTOFilter dateDTOFilter) {
+        return organizationRepository.findOrganizationByBookingDate(dateDTOFilter.getFirstDate(), dateDTOFilter.getSecondDate());
     }
 
     @Override

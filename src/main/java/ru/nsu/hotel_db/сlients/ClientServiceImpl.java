@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.nsu.hotel_db.Entitiy.Client;
+import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.Room;
 import ru.nsu.hotel_db.bills.BillRepository;
 import ru.nsu.hotel_db.сlients.reviews.ReviewRepository;

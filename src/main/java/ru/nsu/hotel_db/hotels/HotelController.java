@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.nsu.hotel_db.hotels.rooms.RoomService;
 import ru.nsu.hotel_db.hotels.hotelServices.HotelServiceService;
+import ru.nsu.hotel_db.сlients.ClientService;
 
 import javax.validation.Valid;
 
@@ -17,8 +18,6 @@ import javax.validation.Valid;
 @RequestMapping("/hotels")
 public class HotelController {
     private final HotelService hotelService;
-    private final HotelServiceService hotelServiceService;
-    private final RoomService roomService;
 
     @GetMapping
     public String getHotels(Model model) {
@@ -45,15 +44,6 @@ public class HotelController {
             model.addAttribute("errorMessage", e.getMessage());
             return "hotelForm";
         }
-        return "redirect:/hotels";
-    }
-
-    @PostMapping
-    public String removeHotel(@RequestParam("id") Long hotelId) {
-        hotelServiceService.removeAllServicesFromHotel(hotelId);
-        roomService.removeAllRoomsFromHotel(hotelId);
-        hotelService.removeHotelById(hotelId);
-        log.info("deleting hotel with id={}", hotelId);
         return "redirect:/hotels";
     }
 }

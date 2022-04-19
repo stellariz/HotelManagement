@@ -15,6 +15,7 @@
 </h3>
 <p>
     <a th:href="@{/reviews/addReview}" class="btn btn-large btn-success">Add new review</a>
+    <a th:href="@{/reviews/angryReviews}" class="btn btn-large btn-success">Get angry reviews</a>
 </p>
 <table class="table table-bordered table-striped">
     <thead>
@@ -28,7 +29,7 @@
     <tbody>
     <tr th:each="tempReviews:${reviewsList}">
         <td>
-            <a th:text="${tempReviews.client.name}"></a>
+            <a th:href="@{/reviews/{id}(id=${tempReviews.client.name})}" th:text="${tempReviews.client.name}"></a>
         </td>
         <td th:text="${tempReviews.review}"></td>
         <td th:text="${tempReviews.rating}"></td>
