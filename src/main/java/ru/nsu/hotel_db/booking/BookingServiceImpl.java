@@ -9,11 +9,12 @@ import ru.nsu.hotel_db.booking.filters.DateAndOrganizationFilterDTO;
 import ru.nsu.hotel_db.organizations.OrganizationRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class BookingServiceImpl implements BookingService{
+public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final OrganizationRepository organizationRepository;
 
@@ -24,7 +25,6 @@ public class BookingServiceImpl implements BookingService{
 
     @Override
     public List<Booking> getBookingInPeriod(DateAndOrganizationFilterDTO dateAndOrganizationFilterDTO) {
-       // return bookingRepository.findBookingInPeriod(dateAndOrganizationFilterDTO.getFirstDate(), dateAndOrganizationFilterDTO.getSecondDate(), dateAndOrganizationFilterDTO.getName());
         return bookingRepository.findBookingByOrganizationNameAndBookingStartDateGreaterThanEqualAndBookingEndDateLessThanEqual(dateAndOrganizationFilterDTO.getName(), dateAndOrganizationFilterDTO.getFirstDate(), dateAndOrganizationFilterDTO.getSecondDate());
     }
 
@@ -45,10 +45,15 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
+    public Optional<Booking> getNearestRoomBooking(Long roomId) {
+        return bookingRepository.findFirstByRoomRoomIdOrderByBookingStartDate(roomId);
+    }
+
+    @Override
     public void removeBooking(Long bookingId) {
         try {
             bookingRepository.deleteById(bookingId);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.info("Catched exception by trigger. Can't remove booking later than 7 days before start date.");
         }
     }

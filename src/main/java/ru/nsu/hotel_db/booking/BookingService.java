@@ -5,6 +5,7 @@ import ru.nsu.hotel_db.Entitiy.Room;
 import ru.nsu.hotel_db.booking.filters.DateAndOrganizationFilterDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingService {
     List<Booking> getAllBookings();
@@ -16,6 +17,8 @@ public interface BookingService {
     Booking addNewBooking(BookingDTO bookingDTO, Room room);
 
     Booking getBookingById(Long bookId);
+
+    Optional<Booking> getNearestRoomBooking(Long roomId);
 
     void removeBooking(Long bookingId);
 }

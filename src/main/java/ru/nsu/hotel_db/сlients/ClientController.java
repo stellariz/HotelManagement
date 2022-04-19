@@ -44,6 +44,7 @@ public class ClientController {
             return "clientForm";
         }
         var rooms = roomService.getFreeRoomsOnDate(clientDTO.getCheckInTime(), clientDTO.getCheckOutTime());
+        model.addAttribute("action", "buy");
         model.addAttribute("roomsList", rooms);
         model.addAttribute("freeRooms", rooms.size());
         return "roomsPage";

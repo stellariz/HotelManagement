@@ -25,7 +25,7 @@ public class BookingController {
     private final OrganizationService organizationService;
 
     @GetMapping
-    public String getAllBookings(@RequestParam Optional<String> filter, RedirectAttributes redirectAttributes, Model model) {
+    public String getAllBookings(@RequestParam Optional<String> filter, Model model) {
         if (filter.isEmpty()) {
             var bookings = bookingService.getAllBookings();
             model.addAttribute("bookingsList", bookings);
@@ -57,7 +57,7 @@ public class BookingController {
         var rooms = roomService.getRoomByBookingConditions(bookingDTO);
         model.addAttribute("roomsList", rooms);
         model.addAttribute("freeRooms", rooms.size());
-        model.addAttribute("action", "Book");
+        model.addAttribute("action", "book");
         model.addAttribute("sale", organizationService.getOrganizationByName(bookingDTO.getOrganization()).get().getSale());
         return "roomsPage";
     }
@@ -66,7 +66,6 @@ public class BookingController {
     @PostMapping("/deleteBooking")
     public String removeBooking(@RequestParam("id") Long bookingId) {
         bookingService.removeBooking(bookingId);
-        log.info("deleting booking with id={}", bookingId);
         return "redirect:/booking";
     }
 

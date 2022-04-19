@@ -27,25 +27,29 @@
         <th>Capacity</th>
         <th>Popularity</th>
         <th>Price</th>
-        <th></th>
+        <th th:if="${action} != null"></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="tempRooms:${roomsList}">
-        <td th:text="${tempRooms.roomNumber}"></td>
+        <td>
+            <a th:href="@{/rooms/info/{id}(id=${tempRooms.roomId})}" th:text="${tempRooms.roomNumber}"></a>
+        </td>
         <td th:text="${tempRooms.floor}"></td>
         <td th:text="${tempRooms.capacity}"></td>
         <td th:text="${tempRooms.popularity}"></td>
         <td th:if="${sale} == null" th:text="${tempRooms.price}"></td>
         <td th:if="${sale} != null" th:text="${tempRooms.price} * (1 - ${sale} / 100)"></td>
-        <td>
+        <td  th:if="${action} != null">
             <form type="text" th:method="post"
-                  th:action="${action} != null ? @{/booking} : @{/clients(roomId=${tempRooms.roomId})}">
-                <button type="submit" th:if="${action} == null" th:name="roomId" th:value="${tempRooms.roomId}"
-                        class="btn btn-large btn-danger">Buy room
+                  th:action="${action} == 'book' ? @{/booking} : @{/clients(roomId=${tempRooms.roomId})}">
+                <button type="submit" th:if="${action} == 'buy'" th:name="roomId" th:value="${tempRooms.roomId}"
+                        class="btn btn-large btn-danger">
+                    Buy room
                 </button>
-                <button type="submit" th:if="${action} != null" th:name="roomId" th:value="${tempRooms.roomId}"
-                        class="btn btn-large btn-info">Book Room
+                <button type="submit" th:if="${action} == 'book'" th:name="roomId" th:value="${tempRooms.roomId}"
+                        class="btn btn-large btn-info">
+                    Book Room
                 </button>
             </form>
         </td>

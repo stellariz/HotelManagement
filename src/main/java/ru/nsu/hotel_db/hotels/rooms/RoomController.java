@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.hotel_db.booking.BookingService;
 import ru.nsu.hotel_db.hotels.HotelService;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -17,6 +19,7 @@ import javax.validation.Valid;
 public class RoomController {
     private final RoomService roomService;
     private final HotelService hotelService;
+    private final BookingService bookingService;
 
     @GetMapping("/{id}")
     public String getRooms(@PathVariable("id") Long chosenHotelId, Model model) {
@@ -48,5 +51,16 @@ public class RoomController {
             return "roomForm";
         }
         return "redirect:/rooms/" + chosenHotelId;
+    }
+
+    @GetMapping("/info/{id}")
+    public String getRoomInfo(@PathVariable("id") Long roomId, Model model){
+        var booking = bookingService.getNearestRoomBooking(roomId);
+        if (booking.isEmpty()){
+            model.addAttribute("freeDate", "not booked yet");
+        } else {
+            model.addAttribute("freeDate", booking.get().getBookingStartDate());
+        }
+        return "roomInfoPage";
     }
 }
