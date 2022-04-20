@@ -11,18 +11,16 @@
 </div>
 <br>
 <h3>
-    Client list
+    Client's info list
 </h3>
-<p th:if="${filter} == 'dateAndRoom'" th:text="'Total number of visitors is: ' + ${clientsList.size()}"></p>
+<p th:text="'Total times visited hotel: ' + ${visitedTimes}"></p>
 <p>
-    <a th:href="@{/clients/addClient}" class="btn btn-large btn-success">Buy room</a>
-    <a th:href="@{/clients/getClientsByDate}" class="btn btn-large btn-info">Filter clients by date</a>
-    <a th:href="@{/clients/getClientsByDateAndRoom}" class="btn btn-large btn-info">Filter clients by date and room properties</a>
+    <a th:href="@{/bill/info/{name}(name=${clientName})}" class="btn btn-large btn-info">Bills</a>
+    <a th:href="@{/reviews/{name}(name=${clientName})}" class="btn btn-large btn-info">Reviews</a>
 </p>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
-        <th>Name</th>
         <th>Room</th>
         <th>Check-in-time</th>
         <th>Check-out-time</th>
@@ -30,9 +28,6 @@
     </thead>
     <tbody>
     <tr th:each="tempClients:${clientsList}">
-        <td>
-            <a th:href="@{/clients/info/{id}(id=${tempClients.name})}" th:text="${tempClients.name}"></a>
-        </td>
         <td th:text="${tempClients.room.roomNumber}"></td>
         <td th:text="${tempClients.checkInTime}"></td>
         <td th:text="${tempClients.checkOutTime}"></td>

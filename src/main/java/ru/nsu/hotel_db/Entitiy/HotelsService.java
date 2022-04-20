@@ -14,7 +14,7 @@ public class HotelsService {
     @Id
     @GeneratedValue
     private Long serviceId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
     @Column(unique = true)

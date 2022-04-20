@@ -15,12 +15,12 @@ public class Booking {
     @Id
     @GeneratedValue
     private Long bookingId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "orgId")
     private Organization organization;
     private LocalDate bookingStartDate;
     private LocalDate bookingEndDate;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "roomId")
     private Room room;
 }

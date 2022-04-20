@@ -15,10 +15,10 @@ public class Bill  {
     @Id
     @GeneratedValue
     private Long billId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "clientId")
     private Client client;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "serviceId")
     private HotelsService hotelsService;
     private LocalDate billDate;

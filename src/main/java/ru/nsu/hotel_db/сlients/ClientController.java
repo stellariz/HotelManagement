@@ -6,9 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.nsu.hotel_db.booking.filters.DateAndOrganizationFilterDTO;
 import ru.nsu.hotel_db.hotels.rooms.RoomService;
+import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
+import ru.nsu.hotel_db.сlients.filters.DateAndRoomDTOFilter;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -20,9 +25,11 @@ public class ClientController {
     private final RoomService roomService;
 
     @GetMapping
-    public String getAllClients(Model model) {
-        var clients = clientService.getAllClients();
-        model.addAttribute("clientsList", clients);
+    public String getAllClients(@RequestParam Optional<String> filter, Model model) {
+        if (filter.isEmpty()) {
+            var clients = clientService.getAllClients();
+            model.addAttribute("clientsList", clients);
+        }
         return "clientsPage";
     }
 
@@ -50,8 +57,45 @@ public class ClientController {
         return "roomsPage";
     }
 
-    @GetMapping("/story")
-    public String getStoryForm(Model model) {
-        return "clientForm";
+    @GetMapping("/getClientsByDate")
+    public String getDateForm(Model model){
+        model.addAttribute("dateDTOFilter", new DateDTOFilter());
+        model.addAttribute("group", "clients");
+        return "dateForm";
+    }
+
+    @PostMapping("/getClientsByDate")
+    public String applyDateFilter(@ModelAttribute("dateDTOFilter") @Valid DateDTOFilter dateDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            return "dateForm";
+        }
+        var clients = clientService.getClientsInPeriod(dateDTOFilter);
+        redirectAttributes.addFlashAttribute("clientsList", clients);
+        return "redirect:/clients?filter=date";
+    }
+
+    @GetMapping("/info/{clientName}")
+    public String getClientInfoPage(@PathVariable("clientName") String clientName, Model model){
+        model.addAttribute("clientName", clientName);
+        var clientStory = clientService.getClientStory(clientName);
+        model.addAttribute("clientsList", clientStory);
+        model.addAttribute("visitedTimes", clientStory.size());
+        return "clientInfoPage";
+    }
+
+    @GetMapping("/getClientsByDateAndRoom")
+    public String getDateAndRoomForm(Model model){
+        model.addAttribute("dateAndRoomDTOFilter", new DateAndRoomDTOFilter());
+        return "dateAndRoomForm";
+    }
+
+    @PostMapping("/getClientsByDateAndRoom")
+    public String applyDateAndRoomFilter(@ModelAttribute("dateAndRoomDTOFilter") @Valid DateAndRoomDTOFilter dateAndRoomDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            return "dateAndRoomForm";
+        }
+        redirectAttributes.addFlashAttribute("clientsList", clientService.getClientsByRoomPropsAndPeriod(dateAndRoomDTOFilter));
+        redirectAttributes.addFlashAttribute("filter", "dateAndRoom");
+        return "redirect:/clients?filter=dateAndRoom";
     }
 }

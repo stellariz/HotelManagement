@@ -15,7 +15,7 @@ public class Room {
     @GeneratedValue
     private Long roomId;
     private Integer roomNumber;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
     private Integer capacity;

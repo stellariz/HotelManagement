@@ -15,9 +15,8 @@ public class Client {
     @Id
     @GeneratedValue
     private Long clientId;
-    @Column(unique = true)
     private String name;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "roomId")
     private Room room;
     private LocalDate checkInTime;

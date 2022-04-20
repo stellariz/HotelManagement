@@ -15,20 +15,36 @@
             <div class="col-12 col-lg-9 col-xl-7">
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Enter date please</h3>
-                        <form th:action="${group} == 'organizations' ? @{/organizations/getOrganizationsBookingByDate} : @{/clients/getClientsByDate}" th:object="${dateDTOFilter}" method="post">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Enter info please</h3>
+                        <form th:action="@{/clients/getClientsByDateAndRoom}" th:object="${dateAndRoomDTOFilter}" method="post">
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="text" th:field="*{floor}" id="floor"
+                                               class="form-control form-control-lg"/>
+                                        <label class="form-label" for="floor">Floor</label>
+                                        <p th:if="${#fields.hasErrors('floor')}" th:errorclass="error" th:errors="*{floor}"></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4 pb-3">
+                                    <div class="form-outline">
+                                        <input type="text" th:field="*{capacity}" id="capacity"
+                                               class="form-control form-control-lg"/>
+                                        <label class="form-label" for="capacity">Capacity</label>
+                                        <p th:if="${#fields.hasErrors('capacity')}" th:errorclass="error" th:errors="*{capacity}"></p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
                                     <div class="form-outline datepicker w-100">
                                         <input th:field="*{firstDate}" id="firstDate" class="form-control" type="date"/>
-                                        <label for="firstDate">Start</label>
                                         <p th:if="${#fields.hasErrors('firstDate')}" th:errorclass="error" th:errors="*{firstDate}"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
                                     <div class="form-outline datepicker w-100">
                                         <input th:field="*{secondDate}" id="secondDate" class="form-control" type="date"/>
-                                        <label for="secondDate">End</label>
                                         <p th:if="${#fields.hasErrors('secondDate')}" th:errorclass="error" th:errors="*{secondDate}"></p>
                                     </div>
                                 </div>

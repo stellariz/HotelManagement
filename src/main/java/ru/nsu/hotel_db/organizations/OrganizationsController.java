@@ -50,6 +50,7 @@ public class OrganizationsController {
     @GetMapping("/getOrganizationsBookingByDate")
     public String getDateForm(Model model){
         model.addAttribute("dateDTOFilter", new DateDTOFilter());
+        model.addAttribute("group", "organizations");
         return "dateForm";
     }
 

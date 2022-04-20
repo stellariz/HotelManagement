@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <link href="/sticky-footer.css" rel="stylesheet">
@@ -14,6 +14,44 @@
     Room info
 </h3>
 <p th:text="'Room will be free in: ' + ${freeDate}"></p>
+<form th:action="@{/rooms/info/{id}(id=${roomId})}"
+      th:object="${dateDTO}" method="post">
+    <div class="row">
+        <div class="col-md-3 mb-2 d-flex align-items-center">
+            <div class="form-outline datepicker w-100">
+                <input th:field="*{firstDate}" id="firstDate" class="form-control" type="date"/>
+                <p th:if="${#fields.hasErrors('firstDate')}" th:errorclass="error" th:errors="*{firstDate}"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 mb-2 d-flex align-items-center">
+            <div class="form-outline datepicker w-100">
+                <input th:field="*{secondDate}" id="secondDate" class="form-control" type="date"/>
+                <p th:if="${#fields.hasErrors('secondDate')}" th:errorclass="error" th:errors="*{secondDate}"></p>
+            </div>
+        </div>
+    </div>
+    <input class="btn btn-success btn-sm mb-4" type="submit" value="Submit"/>
+</form>
+<table class="table table-bordered table-striped" th:if="${filter} != null">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Check-in-time</th>
+        <th>Check-out-time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tempVisit:${roomStory}">
+        <td>
+            <a th:href="@{/clients/info/{id}(id=${tempVisit.name})}" th:text="${tempVisit.name}"></a>
+        </td>
+        <td th:text="${tempVisit.checkInTime}"></td>
+        <td th:text="${tempVisit.checkOutTime}"></td>
+    </tr>
+    </tbody>
+</table>
 <div th:replace="fragments/footer :: footer">
 </div>
 </body>

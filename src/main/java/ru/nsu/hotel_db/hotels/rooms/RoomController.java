@@ -6,11 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nsu.hotel_db.booking.BookingService;
 import ru.nsu.hotel_db.hotels.HotelService;
+import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
+import ru.nsu.hotel_db.сlients.ClientService;
 
 import javax.validation.Valid;
-import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -20,6 +23,7 @@ public class RoomController {
     private final RoomService roomService;
     private final HotelService hotelService;
     private final BookingService bookingService;
+    private final ClientService clientService;
 
     @GetMapping("/{id}")
     public String getRooms(@PathVariable("id") Long chosenHotelId, Model model) {
@@ -54,13 +58,26 @@ public class RoomController {
     }
 
     @GetMapping("/info/{id}")
-    public String getRoomInfo(@PathVariable("id") Long roomId, Model model){
+    public String getRoomInfo(@PathVariable("id") Long roomId, Model model) {
         var booking = bookingService.getNearestRoomBooking(roomId);
-        if (booking.isEmpty()){
+        if (booking.isEmpty()) {
             model.addAttribute("freeDate", "not booked yet");
         } else {
             model.addAttribute("freeDate", booking.get().getBookingStartDate());
         }
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("dateDTO", new DateDTOFilter());
         return "roomInfoPage";
+    }
+
+    @PostMapping("/info/{id}")
+    public String updateRoomStory(@PathVariable("id") Long roomId, @ModelAttribute("dateDTO") @Valid DateDTOFilter dateDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            return "roomInfoPage";
+        }
+        var roomStory = clientService.getClientsInRoomAndPeriod(roomId, dateDTOFilter);
+        redirectAttributes.addFlashAttribute("roomStory", roomStory);
+        redirectAttributes.addFlashAttribute("filter", "true");
+        return "redirect:/rooms/info/" + roomId + "?filter=date";
     }
 }

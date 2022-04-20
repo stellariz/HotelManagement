@@ -15,7 +15,7 @@ public class Review {
     @Id
     @GeneratedValue
     private Long reviewId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "clientId")
     private Client client;
     private String review;
