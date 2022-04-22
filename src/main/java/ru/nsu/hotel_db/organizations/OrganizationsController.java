@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
+import ru.nsu.hotel_db.organizations.filters.RoomsInPeriodDTOFilter;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -48,19 +49,37 @@ public class OrganizationsController {
     }
 
     @GetMapping("/getOrganizationsBookingByDate")
-    public String getDateForm(Model model){
+    public String getDateForm(Model model) {
         model.addAttribute("dateDTOFilter", new DateDTOFilter());
         model.addAttribute("group", "organizations");
         return "dateForm";
     }
 
     @PostMapping("/getOrganizationsBookingByDate")
-    public String applyDateFilter(@ModelAttribute("dateDTOFilter") @Valid DateDTOFilter dateDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        if (bindingResult.hasErrors()){
+    public String applyDateFilter(@ModelAttribute("dateDTOFilter") @Valid DateDTOFilter dateDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
             return "dateForm";
         }
         var organizations = organizationService.getOrganizationsByBookingDate(dateDTOFilter);
         redirectAttributes.addFlashAttribute("organizationsList", organizations);
         return "redirect:/organizations?filter=date";
+    }
+
+    @GetMapping("/getOrganizationsByTotalRoomInPeriod")
+    public String getRoomsInPeriodFilter(Model model) {
+        model.addAttribute("roomsInPeriodDTOFiler", new RoomsInPeriodDTOFilter());
+        return "roomsInPeriodForm";
+    }
+
+    @PostMapping("/getOrganizationsByTotalRoomInPeriod")
+    public String applyRoomsInPeriodFilter(@ModelAttribute("roomsInPeriodDTOFilter") RoomsInPeriodDTOFilter roomsInPeriodDTOFilter, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()){
+            return "roomsInPeriodForm";
+        }
+        var organizations = organizationService.getOrganizationsWithRequiredBookingNumberPerDate(roomsInPeriodDTOFilter);
+        redirectAttributes.addFlashAttribute("listSize", organizations.size());
+        redirectAttributes.addFlashAttribute("organizationsList", organizations);
+        redirectAttributes.addFlashAttribute("filter", "roomsInPeriod");
+        return "redirect:/organizations/getOrganizationsByTotalRoomInPeriod";
     }
 }

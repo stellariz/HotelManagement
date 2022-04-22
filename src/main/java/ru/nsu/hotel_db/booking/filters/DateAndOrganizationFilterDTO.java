@@ -13,8 +13,8 @@ public class DateAndOrganizationFilterDTO {
     private String name;
     @NotNull(message = "Date cannot be empty!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDate firstDate;
+    private LocalDate firstDate;
     @NotNull(message = "Date cannot be empty!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDate secondDate;
+    private LocalDate secondDate;
 }
