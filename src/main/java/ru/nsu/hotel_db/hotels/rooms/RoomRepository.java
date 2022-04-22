@@ -23,4 +23,7 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     @Query(value = "SELECT count(*) as number_of_free_rooms from ( SELECT * FROM ROOM WHERE ROOM_ID not in (select ROOM.ROOM_ID from ROOM join CLIENT C2 on ROOM.ROOM_ID = C2.ROOM_ID where CHECK_OUT_TIME > SYSDATE) and ROOM_ID not in (select B.ROOM_ID from ROOM join BOOKING B on ROOM.ROOM_ID = B.ROOM_ID where ((BOOKING_START_DATE <= ?1 and BOOKING_END_DATE >= ?2) or (BOOKING_START_DATE >= ?1 and BOOKING_END_DATE <= ?2))) )", nativeQuery = true)
     Integer getNumberOfFreeRooms(LocalDate startDate, LocalDate endDate);
+
+    @Query(value = "select * from ROOM join CLIENT C2 on ROOM.ROOM_ID = C2.ROOM_ID where CHECK_OUT_TIME <= ?", nativeQuery = true)
+    List<Room> findRoomsThatWillBeFreeOnDate(LocalDate freeDate);
 }

@@ -3,6 +3,8 @@ package ru.nsu.hotel_db.hotels.rooms;
 import ru.nsu.hotel_db.Entitiy.Hotel;
 import ru.nsu.hotel_db.Entitiy.Room;
 import ru.nsu.hotel_db.booking.BookingDTO;
+import ru.nsu.hotel_db.hotels.rooms.filters.FreeDateDTO;
+import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,4 +18,6 @@ public interface RoomService {
     List<Room> getFreeRoomsOnDate(LocalDate startDate, LocalDate endDate);
 
     List<Room> getRoomByBookingConditions(BookingDTO bookingDTO) throws IllegalArgumentException;
+
+    List<Room> getVacatedRoomsToDate(FreeDateDTO freeDateDTO);
 }

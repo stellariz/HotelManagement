@@ -24,6 +24,7 @@
         <th>Hotel Name</th>
         <th>Room number</th>
         <th>Floor</th>
+        <th>Capacity</th>
         <th>Start booking date</th>
         <th>End booking date</th>
         <th></th>
@@ -35,6 +36,7 @@
         <td th:text="${tempBooking.room.hotel.name}"></td>
         <td th:text="${tempBooking.room.roomNumber}"></td>
         <td th:text="${tempBooking.room.floor}"></td>
+        <td th:href="${tempBooking.room.capacity}"></td>
         <td th:text="${tempBooking.getBookingStartDate}"></td>
         <td th:text="${tempBooking.getBookingEndDate}"></td>
         <td>

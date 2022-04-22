@@ -13,7 +13,7 @@
 <h3>
     Room info
 </h3>
-<p th:text="'Room will be free in: ' + ${freeDate}"></p>
+<p th:text="'Room will be free up to: ' + ${freeDate}"></p>
 <form th:action="@{/rooms/info/{id}(id=${roomId})}"
       th:object="${dateDTO}" method="post">
     <div class="row">

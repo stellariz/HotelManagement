@@ -21,6 +21,7 @@
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
+        <th>Hotel</th>
         <th>Room</th>
         <th>Check-in-time</th>
         <th>Check-out-time</th>
@@ -28,6 +29,7 @@
     </thead>
     <tbody>
     <tr th:each="tempClients:${clientsList}">
+        <td th:text="${tempClients.room.hotel.name}"></td>
         <td th:text="${tempClients.room.roomNumber}"></td>
         <td th:text="${tempClients.checkInTime}"></td>
         <td th:text="${tempClients.checkOutTime}"></td>

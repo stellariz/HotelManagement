@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nsu.hotel_db.booking.BookingService;
 import ru.nsu.hotel_db.hotels.HotelService;
+import ru.nsu.hotel_db.hotels.rooms.filters.FreeDateDTO;
 import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
 import ru.nsu.hotel_db.сlients.ClientService;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -79,5 +79,22 @@ public class RoomController {
         redirectAttributes.addFlashAttribute("roomStory", roomStory);
         redirectAttributes.addFlashAttribute("filter", "true");
         return "redirect:/rooms/info/" + roomId + "?filter=date";
+    }
+
+    @GetMapping("/getRoomsThatWillBeVacated")
+    public String getDateForm(Model model){
+        model.addAttribute("freeDateDTO", new FreeDateDTO());
+        return "vacatedRoomsPage";
+    }
+
+    @PostMapping("/getRoomsThatWillBeVacated")
+    public String applyDateFilter(@ModelAttribute("freeDateDTO") FreeDateDTO freeDateDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()){
+            return "vacatedRoomsPage";
+        }
+        var vacatedRooms = roomService.getVacatedRoomsToDate(freeDateDTO);
+        redirectAttributes.addFlashAttribute("filter", "freeDate");
+        redirectAttributes.addFlashAttribute("roomList", vacatedRooms);
+        return "redirect:/rooms/getRoomsThatWillBeVacated";
     }
 }
