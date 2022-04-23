@@ -13,6 +13,10 @@
 <h3>
     Room info
 </h3>
+<p>
+    <a th:href="@{/reviews(filter=${roomId})}" class="btn btn-large btn-info">Get current visitor's reviews</a>
+    <a th:href="@{/bill/info(filter=${roomId})}" class="btn btn-large btn-info">Get current visitor's bills</a>
+</p>
 <p th:text="'Room will be free up to: ' + ${freeDate}"></p>
 <form th:action="@{/rooms/info/{id}(id=${roomId})}"
       th:object="${dateDTO}" method="post">

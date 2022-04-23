@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface BillService {
     Bill registerNewBill(BuyingServiceClientDTO buyingServiceClientDTO, HotelsService hotelsService, Client client);
+
     List<Bill> getAllBills();
+
     List<Bill> getClientBills(Client client);
+
+    List<Bill> getCurrentVisitorBillsFromRoom(Long roomId);
 }

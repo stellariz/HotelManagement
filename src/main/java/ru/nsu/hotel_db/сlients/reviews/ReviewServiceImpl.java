@@ -34,4 +34,9 @@ public class ReviewServiceImpl implements ReviewService{
     public List<Review> getAngryReviews() {
         return reviewRepository.getAngryReviews();
     }
+
+    @Override
+    public List<Review> getCurrentVisitorReviews(Long roomId) {
+        return reviewRepository.getReviewsFromCurrentVisitor(roomId);
+    }
 }

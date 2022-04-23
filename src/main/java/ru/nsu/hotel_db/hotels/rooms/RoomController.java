@@ -12,6 +12,7 @@ import ru.nsu.hotel_db.hotels.HotelService;
 import ru.nsu.hotel_db.hotels.rooms.filters.FreeDateDTO;
 import ru.nsu.hotel_db.organizations.filters.DateDTOFilter;
 import ru.nsu.hotel_db.сlients.ClientService;
+import ru.nsu.hotel_db.сlients.reviews.ReviewService;
 
 import javax.validation.Valid;
 
@@ -24,6 +25,7 @@ public class RoomController {
     private final HotelService hotelService;
     private final BookingService bookingService;
     private final ClientService clientService;
+    private final ReviewService reviewService;
 
     @GetMapping("/{id}")
     public String getRooms(@PathVariable("id") Long chosenHotelId, Model model) {

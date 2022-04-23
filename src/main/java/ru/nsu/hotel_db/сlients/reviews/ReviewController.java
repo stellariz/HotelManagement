@@ -6,9 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nsu.hotel_db.сlients.ClientService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -19,8 +22,13 @@ public class ReviewController {
     private final ClientService clientService;
 
     @GetMapping
-    public String getAllReviews(Model model) {
-        model.addAttribute("reviewsList", reviewService.getAllReviews());
+    public String getAllReviews(@RequestParam Optional<Long> roomId, Model model) {
+        if (roomId.isEmpty()) {
+            model.addAttribute("reviewsList", reviewService.getAllReviews());
+        } else {
+            var reviewsFromRoom = reviewService.getCurrentVisitorReviews(roomId.get());
+            model.addAttribute("reviewsList", reviewsFromRoom);
+        }
         return "reviewsPage";
     }
 

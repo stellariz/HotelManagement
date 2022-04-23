@@ -29,4 +29,9 @@ public class BillServiceImpl implements BillService{
     public List<Bill> getClientBills(Client client) {
         return billRepository.findBillByClient(client);
     }
+
+    @Override
+    public List<Bill> getCurrentVisitorBillsFromRoom(Long roomId) {
+        return billRepository.findCurrentVisitorBillsFromRoom(roomId);
+    }
 }

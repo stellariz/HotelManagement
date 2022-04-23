@@ -13,4 +13,6 @@ public interface ReviewService {
     List<Review> getClientReviews(String name);
 
     List<Review> getAngryReviews();
+
+    List<Review> getCurrentVisitorReviews(Long roomId);
 }

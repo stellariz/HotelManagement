@@ -10,6 +10,7 @@ import ru.nsu.hotel_db.hotels.hotelServices.HotelServiceService;
 import ru.nsu.hotel_db.сlients.ClientService;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -45,9 +46,13 @@ public class BillController {
         return "redirect:/bill";
     }
 
-    @GetMapping("/info/{clientName}")
-    public String getClientBills(@PathVariable("clientName") String clientName, Model model){
-        model.addAttribute("billsList", billService.getClientBills(clientService.getClientByName(clientName).get()));
+    @GetMapping(value = {"/info/{clientName}", "/info"})
+    public String getClientBills(@PathVariable(value = "clientName", required = false) String clientName, @RequestParam("filter") Optional<Long> roomId, Model model) {
+        if (roomId.isEmpty()) {
+            model.addAttribute("billsList", billService.getClientBills(clientService.getClientByName(clientName).get()));
+        } else {
+            model.addAttribute("billsList", billService.getCurrentVisitorBillsFromRoom(roomId.get()));
+        }
         return "billsPage";
     }
 }
