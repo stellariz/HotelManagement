@@ -13,6 +13,7 @@
 <h3>
     Hotel list
 </h3>
+<p th:text="'Percentage of booked rooms: ' + ${percentage}"></p>
 <p>
     <a th:href="@{/hotels/addHotel}" class="btn btn-large btn-success">Add new hotel</a>
     <a th:href="@{/rooms/getRoomsThatWillBeVacated}" class="btn btn-large btn-info">Get free rooms on date which busy now</a>

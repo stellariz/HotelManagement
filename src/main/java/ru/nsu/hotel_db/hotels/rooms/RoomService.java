@@ -20,4 +20,6 @@ public interface RoomService {
     List<Room> getRoomByBookingConditions(BookingDTO bookingDTO) throws IllegalArgumentException;
 
     List<Room> getVacatedRoomsToDate(FreeDateDTO freeDateDTO);
+
+    Double countPercentageBookedRooms();
 }

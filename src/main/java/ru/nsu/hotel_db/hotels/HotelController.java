@@ -18,11 +18,13 @@ import javax.validation.Valid;
 @RequestMapping("/hotels")
 public class HotelController {
     private final HotelService hotelService;
+    private final RoomService roomService;
 
     @GetMapping
     public String getHotels(Model model) {
         var hotels = hotelService.getAllHotels();
         model.addAttribute("hotelsList", hotels);
+        model.addAttribute("percentage", roomService.countPercentageBookedRooms());
         return "hotelsPage";
     }
 

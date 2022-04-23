@@ -22,4 +22,6 @@ public interface ClientService {
     List<Client> getClientsInRoomAndPeriod(Long roomId, DateDTOFilter dateDTOFilter);
 
     List<Client> getClientsByRoomPropsAndPeriod(DateAndRoomDTOFilter dateAndRoomDTOFilter);
+
+    List<String> getClientsWithMaxVisitsForAllHotels();
 }

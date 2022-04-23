@@ -26,4 +26,8 @@ public interface RoomRepository extends CrudRepository<Room, Long> {
 
     @Query(value = "select * from ROOM where ROOM_ID in (select ROOM_ID from (select C2.ROOM_ID, CHECK_OUT_TIME, row_number() over (PARTITION BY C2.ROOM_ID order by CHECK_IN_TIME desc ) as row_number from ROOM join CLIENT C2 on ROOM.ROOM_ID = C2.ROOM_ID) where row_number = 1 and CHECK_OUT_TIME <= ?)", nativeQuery = true)
     List<Room> findRoomsThatWillBeFreeOnDate(LocalDate freeDate);
+
+    @Query(value = "SELECT ROUND(100.0 * COUNT(UNIQUE BR.ROOM_ID) / COUNT(UNIQUE ROOM.ROOM_ID), 2) as percentage_booked_rooms from ROOM left join BOOKING BR on ROOM.ROOM_ID = BR.ROOM_ID",
+            nativeQuery = true)
+    Double countPercentageBookedRooms();
 }

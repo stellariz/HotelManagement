@@ -30,6 +30,7 @@ public class ClientController {
             var clients = clientService.getAllClients();
             model.addAttribute("clientsList", clients);
         }
+        model.addAttribute("topVisitors", clientService.getClientsWithMaxVisitsForAllHotels());
         return "clientsPage";
     }
 

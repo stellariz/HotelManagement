@@ -44,6 +44,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public Double countPercentageBookedRooms() {
+        return roomRepository.countPercentageBookedRooms();
+    }
+
+    @Override
     public List<Room> getFreeRoomsOnDate(LocalDate startDate, LocalDate endDate) {
         return roomRepository.findFreeRooms(startDate, endDate);
     }

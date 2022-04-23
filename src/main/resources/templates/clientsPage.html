@@ -10,9 +10,24 @@
 <div th:replace="fragments/header :: header">
 </div>
 <br>
-<h3>
+<h2>
     Client list
+</h2>
+<h3>
+    Top visitors
 </h3>
+<table th:if="${filter}==null" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tempClients:${topVisitors}">
+        <td th:text="${tempClients}"></td>
+    </tr>
+    </tbody>
+</table>
 <p th:if="${filter} == 'dateAndRoom'" th:text="'Total number of visitors is: ' + ${clientsList.size()}"></p>
 <p>
     <a th:href="@{/clients/addClient}" class="btn btn-large btn-success">Buy room</a>

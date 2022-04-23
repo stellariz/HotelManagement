@@ -19,8 +19,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
-    private final ReviewRepository reviewRepository;
-    private final BillRepository billRepository;
 
     @Override
     public List<Client> getAllClients() {
@@ -57,5 +55,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> getClientsByRoomPropsAndPeriod(DateAndRoomDTOFilter dateAndRoomDTOFilter) {
         return clientRepository.getClientsInRoomsByFilters(dateAndRoomDTOFilter.getFirstDate(), dateAndRoomDTOFilter.getSecondDate(), dateAndRoomDTOFilter.getFloor(), dateAndRoomDTOFilter.getCapacity());
+    }
+
+    @Override
+    public List<String> getClientsWithMaxVisitsForAllHotels() {
+        return clientRepository.findClientsWithMaxVisitsForEachHotel();
     }
 }
