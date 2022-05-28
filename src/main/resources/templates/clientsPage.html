@@ -41,6 +41,7 @@
         <th>Room</th>
         <th>Check-in-time</th>
         <th>Check-out-time</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -51,10 +52,13 @@
         <td th:text="${tempClients.room.roomNumber}"></td>
         <td th:text="${tempClients.checkInTime}"></td>
         <td th:text="${tempClients.checkOutTime}"></td>
+        <td>
+            <p>
+                <a th:href="@{/bill/evict(clientName=${tempClients.name}, clientId=${tempClients.clientId}, checkInTime=${tempClients.checkInTime}, checkOutTime=${tempClients.checkOutTime})}" class="btn btn-large btn-danger">Evict</a>
+            </p>
+        </td>
     </tr>
     </tbody>
 </table>
-<div th:replace="fragments/footer :: footer">
-</div>
 </body>
 </html>

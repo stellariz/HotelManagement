@@ -10,9 +10,17 @@
 <div th:replace="fragments/header :: header">
 </div>
 <br>
-<h3>
-    Bills list
-</h3>
+<h1>
+    Bill list
+</h1>
+<hr/>
+<div th:if="${evict} != null">
+    <p th:text="'Number of days: ' + ${totalDays}"></p>
+    <p th:text="'Price for the living (per day): ' + ${livingPrice}"></p>
+    <hr/>
+    <p style="font-weight: bold" th:text="'Price for the total bill: ' + ${totalPrice}"></p>
+</div>
+<h3>Details</h3>
 <table class="table table-bordered table-striped">
     <thead>
     <tr>
@@ -25,7 +33,8 @@
     <tbody>
     <tr th:each="tempBill:${billsList}">
         <td>
-            <a th:href="@{/bill/info/{clientName}(clientName=${tempBill.client.name})}" th:text="${tempBill.client.name}"></a>
+            <a th:href="@{/bill/info/{clientName}(clientName=${tempBill.client.name})}"
+               th:text="${tempBill.client.name}"></a>
         </td>
         <td th:text="${tempBill.hotelsService.name}"></td>
         <td th:text="${tempBill.hotelsService.price}"></td>

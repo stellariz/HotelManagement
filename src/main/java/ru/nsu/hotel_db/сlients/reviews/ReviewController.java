@@ -22,7 +22,7 @@ public class ReviewController {
     private final ClientService clientService;
 
     @GetMapping
-    public String getAllReviews(@RequestParam Optional<Long> roomId, Model model) {
+    public String getAllReviews(@RequestParam("filter") Optional<Long> roomId, Model model) {
         if (roomId.isEmpty()) {
             model.addAttribute("reviewsList", reviewService.getAllReviews());
         } else {

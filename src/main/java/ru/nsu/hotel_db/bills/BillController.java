@@ -6,10 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.hotel_db.Entitiy.Bill;
 import ru.nsu.hotel_db.hotels.hotelServices.HotelServiceService;
 import ru.nsu.hotel_db.сlients.ClientService;
 
 import javax.validation.Valid;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -53,6 +57,20 @@ public class BillController {
         } else {
             model.addAttribute("billsList", billService.getCurrentVisitorBillsFromRoom(roomId.get()));
         }
+        return "billsPage";
+    }
+
+    @GetMapping("/evict")
+    public String createBillBeforeEvict(@RequestParam(value = "clientId") Long clientId, @RequestParam(value="clientName") String clientName, @RequestParam(value = "checkInTime") String checkInDate, @RequestParam(value = "checkOutTime") String checkOutTime, Model model) {
+        List<Bill> billList = billService.getBillBeforeEvict(clientId, LocalDate.parse(checkInDate), LocalDate.parse(checkOutTime));
+        long days = LocalDate.parse(checkOutTime).getDayOfYear() -  LocalDate.parse(checkInDate).getDayOfYear();
+        float roomPrice = clientService.getClientByName(clientName).get().getRoom().getPrice();
+        float servicesPrice = billService.countTotalPriceForServices(billList);
+        model.addAttribute("billsList", billList);
+        model.addAttribute("totalDays", days);
+        model.addAttribute("livingPrice", roomPrice);
+        model.addAttribute("totalPrice", roomPrice*days + servicesPrice);
+        model.addAttribute("evict", "evict");
         return "billsPage";
     }
 }

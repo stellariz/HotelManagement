@@ -17,7 +17,6 @@ public class HotelsService {
     @ManyToOne
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
-    @Column(unique = true)
     private String name;
     private Float price;
     private Integer rating;

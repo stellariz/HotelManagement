@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ClientRepository extends CrudRepository<Client, Long> {
     List<Client> findAll();
 
-    Optional<Client> findClientByNameIgnoreCase(String name);
+    Optional<Client> findTopByNameIgnoreCaseOrderByCheckInTimeDesc(String name);
 
     @Query(value = "SELECT * FROM CLIENT join ROOM R on R.ROOM_ID = CLIENT.ROOM_ID where CHECK_IN_TIME >= ?1 and CHECK_OUT_TIME <= ?2 and FLOOR = ?3 and CAPACITY = ?4",
             nativeQuery = true)

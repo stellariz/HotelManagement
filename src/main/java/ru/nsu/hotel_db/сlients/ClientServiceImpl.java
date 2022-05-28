@@ -34,7 +34,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<Client> getClientByName(String name) {
-        return clientRepository.findClientByNameIgnoreCase(name);
+        return clientRepository.findTopByNameIgnoreCaseOrderByCheckInTimeDesc(name);
     }
 
     @Override
